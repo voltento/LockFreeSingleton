@@ -39,7 +39,7 @@ public:
   }
 
   static void reload() {
-    reload([]{ return true; });
+    reload(std::function<bool(std::shared_ptr<T>&)>{});
   }
 protected:
   LockFreeSingleton() = default;
