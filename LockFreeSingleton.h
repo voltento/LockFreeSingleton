@@ -1,3 +1,5 @@
+/// https://github.com/voltento/LockFreeSingleton
+
 #pragma once
 
 #include <functional>
@@ -7,8 +9,8 @@ template<typename T>
 class LockFreeSingleton {
 public:
   template<typename... Args>
-  static void init(Args&& ... args) {
-    auto newInstance = std::shared_ptr<T>(new T{std::forward<Args...>(args...)});
+  static void init(Args&&... args) {
+    auto newInstance = std::shared_ptr<T>(new T{std::forward<Args>(args)...});
     std::atomic_store(&LockFreeSingleton<T>::m_instance, newInstance);
   }
 
@@ -37,7 +39,7 @@ public:
   }
 
   static void reload() {
-    reload(std::function<bool(std::shared_ptr<T>&)>{ return true; });
+    reload([]{ return true; });
   }
 protected:
   LockFreeSingleton() = default;
