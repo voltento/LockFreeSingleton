@@ -2,4 +2,4 @@
 Header only.
 See the main.cpp for example.
 
-CMake, C++11
+CMake, C++14
