@@ -26,13 +26,7 @@ public:
   /// \param preReloadFunc
   template<typename PreLoadFunc>
   static void reload(PreLoadFunc&& preReloadFunc) {
-    std::shared_ptr<T> newInstance;
-
-    if constexpr (std::is_copy_constructible<T>::value) {
-      newInstance = std::shared_ptr<T>(new T(*m_instance));
-    } else {
-      newInstance = std::shared_ptr<T>(new T);
-    }
+    auto newInstance = std::shared_ptr<T>(new T(*m_instance));
 
     if (preReloadFunc) {
       if (!preReloadFunc(newInstance)) {
